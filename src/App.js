@@ -1,41 +1,23 @@
-import './App.css';
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-
-function App() {
-
-  const [posts, setPosts] = useState([])
+export default function App() {
+  const [post, setPost] = useState({});
 
   useEffect(() => {
-    axios.get("https://hammerhead-app-5cwy4.ondigitalocean.app/api/lucas-pessoals/1")
+    axios
+      .get("https://hammerhead-app-5cwy4.ondigitalocean.app/api/lucas-pessoals/1")
       .then((response) => {
-        console.log(response.data)
-        
-      })
-      .catch(() => {
-        console.log("deu errado")
-      })
-  }, [])
+        const { data } = response.data;
+        setPost(data);
+      });
+  }, []);
 
-return(
-  <div >
-    {posts.map((post, key) => {
-
-      return (
-        
-        <div key={key}>
-          <h1>{post.tittle}</h1>
-          <p>olá</p>
-          <img src="" alt="" />
-        </div>
-      )
-    })}
-
-    
-  </div>
-)
-
+  return (
+    <div>
+      <h1>{post?.attributes?.tittle}</h1>
+      <p>{post?.attributes?.textpub}</p>
+       <img src="https://hammerhead-app-5cwy4.ondigitalocean.app/uploads/31747820_2273470502895975_7966063349278441472_n_4d96fb1beb.jpg" alt=""></img>
+    </div>
+  );
 }
-
-export default App;
